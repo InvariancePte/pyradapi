@@ -3,6 +3,7 @@ import urllib3
 import json
 
 import pyradapi.schema as sc
+from pyradapi.schema import Action
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -164,7 +165,7 @@ class GatewayTransactionPayloads:
 
     def build(
         self,
-        actions: list[dict],
+        actions,
         fee_payer_address: str,
         message: str,
         disable_token_mint_and_burn: bool,
