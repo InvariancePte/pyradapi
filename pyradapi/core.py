@@ -164,7 +164,7 @@ class GatewayTransactionPayloads:
 
     def build(
         self,
-        actions: list[sc.Action],
+        actions: list[dict],
         fee_payer_address: str,
         message: str,
         disable_token_mint_and_burn: bool,
