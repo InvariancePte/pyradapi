@@ -147,8 +147,8 @@ class GatewayValidatorPayloads:
             self.url,
             {
                 **sc.network_identifier(self.network),
-                **sc.validator_identifier(address)
-                ** sc.at_state_identifier(**at_state_identifier),
+                **sc.validator_identifier(address),
+                **sc.at_state_identifier(**at_state_identifier),
             },
         )
 
