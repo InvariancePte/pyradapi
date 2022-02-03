@@ -280,7 +280,7 @@ if __name__ == "__main__":
 
     rgw = RadixGateway()
     # payloadObj = rgw.gateway()
-    # payloadObj = rgw.account.derive(hex)
+    payloadObj = rgw.account.derive(hex)
     payloadObj = rgw.token(rri)
     payloadObj = rgw.token.native()
 
