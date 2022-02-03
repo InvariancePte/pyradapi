@@ -10,7 +10,7 @@ from setuptools import setup
 
 setup(
     name="pyradapi",
-    version="0.142",
+    version="0.143",
     packages=["pyradapi"],
     description="A python package to use radix api easily",
     license="Invariance Pte Limited",
