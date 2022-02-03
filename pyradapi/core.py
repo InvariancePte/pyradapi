@@ -28,9 +28,9 @@ def post_payload(url: str, payload: dict = dict()):
     )
     return json.loads(resp.data.decode("utf-8"))
 
-def post_payload_object(payloadObj:Payload):
-    return post_payload(url = payloadObj.url, payload=payloadObj.payload)
 
+def post_payload_object(payloadObj: Payload):
+    return post_payload(url=payloadObj.url, payload=payloadObj.payload)
 
 
 class GatewayTokenPayloads:
@@ -198,7 +198,7 @@ class GatewayTransactionPayloads:
             {
                 **sc.network_identifier(self.network),
                 "unsigned_transaction": unsigned_transaction,
-                **sc.signiture(hex, bytes),
+                **sc.signature(hex, bytes),
                 "submit": submit,
             },
         )
