@@ -2,7 +2,7 @@ from urllib.parse import urljoin
 import urllib3
 import json
 
-import schema as sc
+import pyradapi.schema as sc
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
