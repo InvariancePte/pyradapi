@@ -22,6 +22,10 @@ def from_account(address: str) -> dict:
     return _address_builder("from_account", address)
 
 
+def validator(address: str) -> dict:
+    return _address_builder("validator", address)
+
+
 def to_validator(address: str) -> dict:
     return _address_builder("to_validator", address)
 
@@ -153,6 +157,12 @@ class Action:
 
     def BurnTokens(address: str, value: str, rri: str):
         return {"type": "BurnTokens", **from_account(address), **amount(value, rri)}
+
+    def RegisterValidator(address: str):
+        return {"type": "RegisterValidator", **validator(address)}
+
+    def UnregisterValidator(address: str):
+        return {"type": "RegisterValidator", **validator(address)}
 
 
 def at_state_identifier(

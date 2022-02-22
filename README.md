@@ -4,7 +4,7 @@ A python module to speed up the json payload construction for calling the Radix 
 
 https://docs.radixdlt.com/main/apis/api-specification.html
 
-### Gateway endpoints / methods (version 1.0.0)
+### Gateway endpoints / methods (version 1.1.2)
 - gateway()
 - account - not callable, just a property
     - derive()
@@ -17,6 +17,7 @@ https://docs.radixdlt.com/main/apis/api-specification.html
     - derive()
 - validator()
     - derive()
+    - stakes()
 - validators()
 - transaction - not callable, just a property
     - rules()
@@ -30,7 +31,7 @@ https://docs.radixdlt.com/main/apis/api-specification.html
 ### Quick example usage
 import the main things we will need
 
-    from pyradapi.core import RadixGateway, post_payload_object, Action
+    from pyradapi import RadixGateway, post_payload_object, Action
 
 create a gateway object
 

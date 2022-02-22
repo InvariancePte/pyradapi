@@ -1,36 +1,7 @@
 from urllib.parse import urljoin
-import urllib3
-import json
 
 import pyradapi.schema as sc
-from pyradapi.schema import Action
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-class Payload:
-    def __init__(self, url: str, payload: str) -> None:
-        self.payload = payload
-        self.url = url
-
-    def __repr__(self) -> str:
-        return f"url:\t\t{self.url} \npayload:\t{json.dumps(self.payload)}"
-
-
-# standard posting payload
-def post_payload(url: str, payload: dict = dict()):
-    http = urllib3.PoolManager()
-    resp = http.request(
-        method="POST",
-        url=url,
-        headers={"Content-Type": "application/json"},
-        body=json.dumps(payload),
-    )
-    return json.loads(resp.data.decode("utf-8"))
-
-
-def post_payload_object(payloadObj: Payload):
-    return post_payload(url=payloadObj.url, payload=payloadObj.payload)
+from pyradapi.payload import Payload
 
 
 class GatewayTokenPayloads:
@@ -139,6 +110,18 @@ class GatewayValidatorPayloads:
             {
                 **sc.network_identifier(self.network),
                 **sc.public_key(hex),
+            },
+        )
+
+    def stakes(self, address: str, cursor: str, limit: int, **at_state_identifier):
+        return Payload(
+            urljoin(self.url, "stakes"),
+            {
+                **sc.network_identifier(self.network),
+                **sc.at_state_identifier(**at_state_identifier),
+                **sc.validator_identifier(address),
+                "cursor": cursor,
+                "limit": limit,
             },
         )
 
@@ -264,33 +247,4 @@ class RadixGateway:
 
 
 if __name__ == "__main__":
-
-    hex = "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"
-    wallet = "rdx1qsp9yzlpkvzs2dzkd56zpftr3jkp4mxz8d8r6nnqy26202mhnu7zpmgephkav"
-    rri = "caviar_rr1qvnxng85y762xs3fklvxmequaww8k0nhraqv7nqjvmxs4ahu3d"
-
-    # ga = GatewayAccountPayloads(
-    #     network="mainnet", url="https://mainnet-gateway.radixdlt.com"
-    # )
-    # payloadObj = ga.derive(hex=hex)
-    # payloadObj = ga.stakes(address=wallet)
-    # payloadObj = ga.unstakes(address=wallet)
-    # payloadObj = ga.balances(address=wallet)
-    # payloadObj = ga.transactions(address=wallet, cursor="0", limit=2)
-
-    # gtp = GatewayTokenPayloads(
-    #     network="mainnet", url="https://mainnet-gateway.radixdlt.com"
-    # )
-    # payloadObj = gtp.native()
-    # payloadObj = gtp(rri)
-
-    rgw = RadixGateway()
-    # payloadObj = rgw.gateway()
-    payloadObj = rgw.account.derive(hex)
-    payloadObj = rgw.token(rri)
-    payloadObj = rgw.token.native()
-
-    print(payloadObj)
-
-    # resp = post_payload(url=payloadObj.url, payload=payloadObj.payload)
-    # print(resp)
+    pass
