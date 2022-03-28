@@ -155,25 +155,28 @@ class GatewayTransactionPayloads:
         self,
         actions,
         fee_payer_address: str,
-        message: str,
-        disable_token_mint_and_burn: bool,
+        message: str = None,
+        disable_token_mint_and_burn: bool = None,
         **at_state_identifier,
     ):
 
         if not isinstance(actions, list):
             actions = list(actions)
 
-        return Payload(
-            urljoin(self.url, "build"),
-            {
-                **sc.network_identifier(self.network),
-                **sc.at_state_identifier(**at_state_identifier),
-                "actions": actions,
-                **sc.fee_payer(fee_payer_address),
-                "message": message,
-                "disable_token_mint_and_burn": disable_token_mint_and_burn,
-            },
-        )
+        payload = {
+            **sc.network_identifier(self.network),
+            **sc.at_state_identifier(**at_state_identifier),
+            "actions": actions,
+            **sc.fee_payer(fee_payer_address),
+        }
+
+        if message is not None:
+            payload["message"] = message
+
+        if disable_token_mint_and_burn is not None:
+            payload["disable_token_mint_and_burn"] = disable_token_mint_and_burn
+
+        return Payload(urljoin(self.url, "build"), payload)
 
     def finalize(self, unsigned_transaction: str, hex: str, bytes: str, submit: bool):
         return Payload(
