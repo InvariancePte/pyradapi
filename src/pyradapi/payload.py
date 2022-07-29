@@ -22,7 +22,8 @@ def post_payload(url: str, payload: dict = dict()):
         headers={"Content-Type": "application/json"},
         body=json.dumps(payload),
     )
-    return json.loads(resp.data.decode("utf-8"))
+    return resp.data.decode("utf-8", errors="ignore")
+    # return json.loads(resp.data.decode("utf-8"))
 
 
 def post_payload_object(payloadObj: Payload):
