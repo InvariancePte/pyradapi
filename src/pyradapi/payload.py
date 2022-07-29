@@ -15,15 +15,17 @@ class Payload:
 
 # standard posting payload
 def post_payload(url: str, payload: dict = dict()):
-    http = urllib3.PoolManager()
-    resp = http.request(
-        method="POST",
-        url=url,
-        headers={"Content-Type": "application/json"},
-        body=json.dumps(payload),
-    )
-    return resp.data.decode("utf-8", errors="ignore")
-    # return json.loads(resp.data.decode("utf-8"))
+    try:
+        http = urllib3.PoolManager()
+        resp = http.request(
+            method="POST",
+            url=url,
+            headers={"Content-Type": "application/json"},
+            body=json.dumps(payload),
+        )
+        return json.loads(resp.data.decode("utf-8"))
+    except:
+        return resp.data.decode("utf-8", errors="ignore")
 
 
 def post_payload_object(payloadObj: Payload):
